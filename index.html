@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de IMC y Snack Recomendado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .resultado {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        img {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+        .grupo {
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo Innova -->
+    <img src="logo.png" alt="Logo Innova Schools">
+
+    <h1>Calcula tu IMC y elige tu snack 🍎🍫</h1>
+    <div class="grupo">Grupo LOS INNOVADORES - 6to A SM1</div>
+
+    <label for="peso">Peso (kg):</label><br>
+    <input type="number" id="peso" step="0.1"><br>
+
+    <label for="altura">Altura (m):</label><br>
+    <input type="number" id="altura" step="0.01"><br>
+
+    <button onclick="calcularIMC()">Calcular IMC</button>
+
+    <div id="resultado" class="resultado"></div>
+
+    <script>
+        function calcularIMC() {
+            var peso = parseFloat(document.getElementById("peso").value);
+            var altura = parseFloat(document.getElementById("altura").value);
+            var resultadoDiv = document.getElementById("resultado");
+
+            if (isNaN(peso) || isNaN(altura) || altura <= 0) {
+                resultadoDiv.innerHTML = "Por favor, ingresa datos válidos.";
+                return;
+            }
+
+            var imc = peso / (altura * altura);
+            var clasificacion = "";
+            var snack = "";
+
+            if (imc < 18.5) {
+                clasificacion = "Bajo peso";
+                snack = "Una barra de frutos secos o un batido de proteínas.";
+            } else if (imc >= 18.5 && imc < 24.9) {
+                clasificacion = "Peso normal";
+                snack = "Una fruta o un yogurt light.";
+            } else if (imc >= 25 && imc < 29.9) {
+                clasificacion = "Sobrepeso";
+                snack = "Frutos secos o galletas integrales + agua.";
+            } else {
+                clasificacion = "Obesidad";
+                snack = "Una botella de agua y evitar snacks calóricos.";
+            }
+
+            resultadoDiv.innerHTML = "<strong>Tu IMC es:</strong> " + imc.toFixed(2) + "<br>" +
+                                     "<strong>Clasificación:</strong> " + clasificacion + "<br>" +
+                                     "<strong>Snack recomendado:</strong> " + snack;
+        }
+    </script>
+</body>
+</html>
