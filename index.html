@@ -70,16 +70,16 @@
 
             if (imc < 18.5) {
                 clasificacion = "Bajo peso";
-                snack = "Presiona 01 - Una barra de frutos secos o un batido de proteínas.";
+                snack = "Presiona 01 - Una barra de granola.";
             } else if (imc >= 18.5 && imc < 24.9) {
                 clasificacion = "Peso normal";
-                snack = "Presiona 02 - Una fruta o un yogurt light.";
+                snack = "Presiona 02 - Galleta integral.";
             } else if (imc >= 25 && imc < 29.9) {
                 clasificacion = "Sobrepeso";
-                snack = "Presiona 03 - Frutos secos o galletas integrales + agua.";
+                snack = "Presiona 03 - Frutos secos sin sal";
             } else {
                 clasificacion = "Obesidad";
-                snack = "Presiona 04 - Una botella de agua y evitar snacks calóricos.";
+                snack = "Presiona 04 - Fruta deshidratada sin azúcar.";
             }
 
             resultadoDiv.innerHTML = "<strong>Tu IMC es:</strong> " + imc.toFixed(2) + "<br>" +
