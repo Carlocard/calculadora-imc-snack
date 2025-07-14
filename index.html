@@ -1,91 +1,166 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Calculadora de IMC y Snack Recomendado</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-        }
-        .resultado {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #ffffff;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        }
-        input, button {
-            padding: 8px;
-            margin: 5px 0;
-        }
-        img {
-            width: 150px;
-            margin-bottom: 10px;
-        }
-        .grupo {
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #4CAF50;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Calculadora de IMC y Snack Recomendado</title>
+  <style>
+    :root {
+      --color-fondo: #f9f9f9;
+      --color-primario: #4CAF50;
+      --color-texto: #333;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--color-fondo);
+      text-align: center;
+      font-size: 18px;
+      color: var(--color-texto);
+    }
+
+    img {
+      width: 120px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .grupo {
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: var(--color-primario);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, button {
+      padding: 14px;
+      font-size: 16px;
+      width: 90%;
+      max-width: 320px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: var(--color-primario);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .resultado {
+      margin-top: 25px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-size: 18px;
+    }
+
+    .btn-repetir {
+      margin-top: 15px;
+      background-color: #2196F3;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+      input, button {
+        font-size: 18px;
+      }
+      .resultado {
+        font-size: 17px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Logo Innova -->
-    <img src="logo.png" alt="Logo Innova Schools">
+  <img src="logo.png" alt="Logo Innova Schools" />
+  <h1>Calcula tu IMC y elige tu snack 🍎🍫</h1>
+  <div class="grupo">Grupo LOS INNOVADORES - 6to A SM1</div>
 
-    <h1>Calcula tu IMC y elige tu snack 🍎🍫</h1>
-    <div class="grupo">Grupo LOS INNOVADORES - 6to A SM1</div>
+  <label for="peso">Peso (kg):</label>
+  <input type="number" id="peso" step="0.1" />
 
-    <label for="peso">Peso (kg):</label><br>
-    <input type="number" id="peso" step="0.1"><br>
+  <label for="altura">Altura (m):</label>
+  <input type="number" id="altura" step="0.01" />
 
-    <label for="altura">Altura (m):</label><br>
-    <input type="number" id="altura" step="0.01"><br>
+  <button onclick="calcularIMC()">Calcular IMC</button>
 
-    <button onclick="calcularIMC()">Calcular IMC</button>
+  <div id="resultado" class="resultado"></div>
+  <button id="repetirBtn" class="btn-repetir" style="display: none;" onclick="repetirMensaje()">🔊 Repetir</button>
 
-    <div id="resultado" class="resultado"></div>
+  <script>
+    let ultimoMensaje = "";
 
-    <script>
-        function calcularIMC() {
-            var peso = parseFloat(document.getElementById("peso").value);
-            var altura = parseFloat(document.getElementById("altura").value);
-            var resultadoDiv = document.getElementById("resultado");
+    function calcularIMC() {
+      const peso = parseFloat(document.getElementById("peso").value);
+      const altura = parseFloat(document.getElementById("altura").value);
+      const resultadoDiv = document.getElementById("resultado");
+      const repetirBtn = document.getElementById("repetirBtn");
 
-            if (isNaN(peso) || isNaN(altura) || altura <= 0) {
-                resultadoDiv.innerHTML = "Por favor, ingresa datos válidos.";
-                return;
-            }
+      if (isNaN(peso) || isNaN(altura) || altura <= 0) {
+        ultimoMensaje = "Por favor, ingresa datos válidos.";
+        resultadoDiv.innerHTML = ultimoMensaje;
+        repetirBtn.style.display = "inline-block";
+        hablar(ultimoMensaje);
+        return;
+      }
 
-            var imc = peso / (altura * altura);
-            var clasificacion = "";
-            var snack = "";
+      const imc = peso / (altura * altura);
+      let clasificacion = "";
+      let snack = "";
 
-            if (imc < 18.5) {
-                clasificacion = "Bajo peso";
-                snack = "Presiona 01 - Una barra de granola.";
-            } else if (imc >= 18.5 && imc < 24.9) {
-                clasificacion = "Peso normal";
-                snack = "Presiona 02 - Galleta integral.";
-            } else if (imc >= 25 && imc < 29.9) {
-                clasificacion = "Sobrepeso";
-                snack = "Presiona 03 - Frutos secos sin sal";
-            } else {
-                clasificacion = "Obesidad";
-                snack = "Presiona 04 - Fruta deshidratada sin azúcar.";
-            }
+      if (imc < 18.5) {
+        clasificacion = "Bajo peso";
+        snack = "Presiona cero uno, una barra de granola.";
+      } else if (imc >= 18.5 && imc < 24.9) {
+        clasificacion = "Peso normal";
+        snack = "Presiona cero dos, galleta integral.";
+      } else if (imc >= 25 && imc < 29.9) {
+        clasificacion = "Sobrepeso";
+        snack = "Presiona cero tres, frutos secos sin sal.";
+      } else {
+        clasificacion = "Obesidad";
+        snack = "Presiona cero cuatro, fruta deshidratada sin azúcar.";
+      }
 
-            resultadoDiv.innerHTML = "<strong>Tu IMC es:</strong> " + imc.toFixed(2) + "<br>" +
-                                     "<strong>Clasificación:</strong> " + clasificacion + "<br>" +
-                                     "<strong>Snack recomendado:</strong> " + snack;
-        }
-    </script>
+      ultimoMensaje = `Tu índice de masa corporal es ${imc.toFixed(2)}. Clasificación: ${clasificacion}. Snack recomendado: ${snack}`;
+      resultadoDiv.innerHTML =
+        "<strong>Tu IMC es:</strong> " + imc.toFixed(2) + "<br>" +
+        "<strong>Clasificación:</strong> " + clasificacion + "<br>" +
+        "<strong>Snack recomendado:</strong> " + snack;
+
+      repetirBtn.style.display = "inline-block";
+      hablar(ultimoMensaje);
+    }
+
+    function hablar(texto) {
+      const mensaje = new SpeechSynthesisUtterance(texto);
+      mensaje.lang = 'es-ES';
+      window.speechSynthesis.cancel(); // Cancela si ya estaba hablando
+      window.speechSynthesis.speak(mensaje);
+    }
+
+    function repetirMensaje() {
+      if (ultimoMensaje) {
+        hablar(ultimoMensaje);
+      }
+    }
+  </script>
 </body>
 </html>
